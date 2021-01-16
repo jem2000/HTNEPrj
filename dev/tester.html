@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SIR Form</title>
+    <script type="text/javascript" src="apicall.js"></script>
+</head>
+<body>
+
+<form class="form">
+<label for="viruses">Select which infectious virus you would like to model:</label>
+<label for="cities">Fetching Jason:</label>
+
+<button type = "button" onclick="
+D.value = getSIRfromData(0,'ca')[0];
+">Calculate</button><br><br>
+<label for = "D">Dead: </label>
+<output name = "D" id = "D" for = "D"></output><br>
+
+</form>
+
+
+</body>
+</html>
