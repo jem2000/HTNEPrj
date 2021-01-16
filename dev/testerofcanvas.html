@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>circles</title>
+    <script type="text/javascript" src="apicall.js"></script>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <script src="./circles.js"></script>
+</head>
+<body>
+
+<form class="form">
+<button type = "button" onclick="
+D.value = getSIRfromData(0,'ca')[0];
+DrawCircles(40,20,5);
+">Calculate</button><br><br>
+<label for = "D">Dead: </label>
+<output name = "D" id = "D" for = "D"></output><br>
+</form>
+
+<div id="container" style="width:100%;height:auto">
+ 
+  <canvas id="myCanvas" ></canvas>
+  <img class="contain" src="OPA.jpg" alt="Girl in a jacket">
+  <div id="overlay">This div is over the canvas</div>
+
+</div>
+
+</body>
+</html>

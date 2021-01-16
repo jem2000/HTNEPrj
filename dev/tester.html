@@ -1,48 +1,31 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <title>circles</title>
+    <title>SIR Form</title>
     <script type="text/javascript" src="apicall.js"></script>
-    <link rel="stylesheet" type="text/css" href="./styles.css" />
-    <script src="./circles.js"></script>
-=======
     <title>This is an api test</title>
 
->>>>>>> b5812640aa007caf36296a8c844e4ada98a8b421
 </head>
 <body>
 
 <form class="form">
-<<<<<<< HEAD
-<button type = "button" onclick="
-D.value = getSIRfromData(0,'ca')[0];
-DrawCircles(40,20,5);
-">Calculate</button><br><br>
-<label for = "D">Dead: </label>
-<output name = "D" id = "D" for = "D"></output><br>
-</form>
-
-<div id="container" style="width:100%;height:auto">
- 
-  <canvas id="myCanvas" ></canvas>
-  <img class="contain" src="OPA.jpg" alt="Girl in a jacket">
-  <div id="overlay">This div is over the canvas</div>
-
-</div>
-
-=======
+<label for="viruses">Select which infectious virus you would like to model:</label>
+<label for="cities">Fetching Jason:</label>
     <label for="viruses">Select which infectious virus you would like to model:</label>
     <label for="cities">Fetching Json:</label>
 
+<button type = "button" onclick="
+D.value = getSIRfromData(0,'ca')[0];
+">Calculate</button><br><br>
+<label for = "D">Dead: </label>
+<output name = "D" id = "D" for = "D"></output><br>
     <button type = "button" id = "asyncButton" >Calculate</button><br><br>
     <label for = "D">Dead: </label>
     <output name = "D" id = "D" for = "D"></output><br>
 
 </form>
 
+
 <script type="text/javascript" src="apicall.js"></script>
->>>>>>> b5812640aa007caf36296a8c844e4ada98a8b421
 </body>
 </html>
