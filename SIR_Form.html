@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SIR Form</title>
+    <link rel="stylesheet" href="SIR_Form.css">
+    <script type="text/javascript" src="SIR_Form.js"></script>
+</head>
+<body>
+
+<form class="form">
+<label for="viruses">Select which infectious virus you would like to model:</label>
+<select name="viruses" id="viruses" oninput="setVirusData(value)">
+    <option value="covid">Covid-19</option>
+    <option value="flu">Influenza</option>
+    <option value="cold">The common cold</option>
+</select><br><br>
+
+<label for="cities">Select which city you would like to model:</label>
+<select name="cities" id="cities" oninput="setCityData(value)">
+    <option value="sf">San Francisco</option>
+    <option value="nyc">New York City</option>
+    <option value="boston">Boston</option>
+</select><br><br>
+
+<label for = "time">How long has the virus been spreading? (days): </label>
+<input type = "number" id = "time" name = "time" oninput="setTimeLength(parseInt(time.value))"><br><br>
+
+
+<button type = "button" onclick="
+SS.value = SIREulers()[0];
+CI.value = SIREulers()[1];
+TI.value = SIREulers()[1] + SIREulers()[2];
+R.value = SIREulers()[2] * 0.9;
+D.value = SIREulers()[2] * 0.1;
+">Calculate</button><br><br>
+
+<label for = "SS">Still susceptible: </label>
+<output name = "SS" id = "SS" for = "SS"></output><br>
+
+<label for = "CI">Currently infected: </label>
+<output name = "CI" id = "CI" for = "CI"></output><br>
+
+<label for = "TI">Total infected: </label>
+<output name = "TI" id = "TI" for = "TI"></output><br>
+
+<label for = "R">Recovered: </label>
+<output name = "R" id = "R" for = "R"></output><br>
+
+<label for = "D">Dead: </label>
+<output name = "D" id = "D" for = "D"></output><br>
+
+</form>
+
+
+</body>
+</html>
