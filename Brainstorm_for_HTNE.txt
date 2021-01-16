@@ -17,4 +17,8 @@ Cool apis to use
 	- stock data 
 	- weather data 
 	- something to do with the vacince supply chain 
+	- climate data 
+	- covid tracking 
+	- election results 
+	- road use like for trafic optimization 
 	
