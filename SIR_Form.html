@@ -23,16 +23,19 @@
     <option value="boston">Boston</option>
 </select><br><br>
 
-<label for = "time">How long has the virus been spreading? (days): </label>
+<label for = "infected">How many people were initially infected? </label>
+<input type = "number" id = "infected" name = "infected" oninput="setInitialInfectedData(parseInt(infected.value))"><br><br>
+
+<label for = "time">How long has the virus been spreading? (weeks): </label>
 <input type = "number" id = "time" name = "time" oninput="setTimeLength(parseInt(time.value))"><br><br>
 
 
 <button type = "button" onclick="
-SS.value = SIREulers()[0];
-CI.value = SIREulers()[1];
-TI.value = SIREulers()[1] + SIREulers()[2];
-R.value = SIREulers()[2] * 0.9;
-D.value = SIREulers()[2] * 0.1;
+SS.value = SIREulers()[0]
+CI.value = SIREulers()[1]
+TI.value = SIREulers()[2]
+R.value = SIREulers()[3]
+D.value = SIREulers()[4]
 ">Calculate</button><br><br>
 
 <label for = "SS">Still susceptible: </label>
