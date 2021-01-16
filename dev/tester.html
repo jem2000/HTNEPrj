@@ -2,23 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SIR Form</title>
-    <script type="text/javascript" src="apicall.js"></script>
+    <title>This is an api test</title>
+
 </head>
 <body>
 
 <form class="form">
-<label for="viruses">Select which infectious virus you would like to model:</label>
-<label for="cities">Fetching Jason:</label>
+    <label for="viruses">Select which infectious virus you would like to model:</label>
+    <label for="cities">Fetching Json:</label>
 
-<button type = "button" onclick="
-D.value = getSIRfromData(0,'ca')[0];
-">Calculate</button><br><br>
-<label for = "D">Dead: </label>
-<output name = "D" id = "D" for = "D"></output><br>
+    <button type = "button" id = "asyncButton" >Calculate</button><br><br>
+    <label for = "D">Dead: </label>
+    <output name = "D" id = "D" for = "D"></output><br>
 
 </form>
 
-
+<script type="text/javascript" src="apicall.js"></script>
 </body>
 </html>
