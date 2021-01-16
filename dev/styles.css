@@ -1,0 +1,11 @@
+/* Set the size of the div element that contains the map */
+body {background-color: coral;}
+#container {
+  position: relative;
+}
+#container canvas, #overlay {
+  position: absolute;
+}
+canvas {
+  border: 1px solid black;
+}
