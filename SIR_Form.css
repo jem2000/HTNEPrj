@@ -7,4 +7,20 @@
     float: right;
     margin-right: 50px;
     margin-top: 50px;
+    padding: 10px;
+}
+
+.map {
+    float: left;
+}
+
+#container {
+    position: relative;
+    float: left;
+}
+#container canvas, #map {
+    position: absolute;
+}
+canvas {
+    border: 1px solid black;
 }

@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>SIR Form</title>
-    <link rel="stylesheet" href="SIR_Form.css">
-    <script type="text/javascript" src="SIR_Form.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
+<div id = 'container' style='width: 1200px; height: 900px;'>
+    <div id='map' class = 'map' style='width: 1200px; height: 900px;'></div>
+    <canvas id="myCanvas"  width= "1200" height = "900px" ></canvas>
+</div>
+
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYXJrdHlrMjAwMCIsImEiOiJja2p5eTZzb2QwMjhrMm5vNTlqbHp6N3c4In0.wzX0g3xgiMMS2_dy2uHFWQ';
+    let map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-73.9665, 40.7812],
+        zoom: 12
+
+    });
+</script>
 
 <form class="form">
 <label for="viruses">Select which infectious virus you would like to model:</label>
@@ -24,10 +40,22 @@
 </select><br><br>
 
 <label for = "infected">How many people were initially infected? </label>
-<input type = "number" id = "infected" name = "infected" oninput="setInitialInfectedData(parseInt(infected.value))"><br><br>
+<input type = "number" id = "infected" name = "infected" oninput="setInitialInfectedData(parseInt(infected.value))
+SS.value = SIREulers()[0]
+CI.value = SIREulers()[1]
+TI.value = SIREulers()[2]
+R.value = SIREulers()[3]
+D.value = SIREulers()[4]
+DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
 
 <label for = "time">How long has the virus been spreading? (weeks): </label>
-<input type = "number" id = "time" name = "time" oninput="setTimeLength(parseInt(time.value))"><br><br>
+<input type = "number" id = "time" name = "time" oninput="setTimeLength(parseInt(time.value))
+SS.value = SIREulers()[0]
+CI.value = SIREulers()[1]
+TI.value = SIREulers()[2]
+R.value = SIREulers()[3]
+D.value = SIREulers()[4]
+DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
 
 
 <button type = "button" onclick="
@@ -36,6 +64,7 @@ CI.value = SIREulers()[1]
 TI.value = SIREulers()[2]
 R.value = SIREulers()[3]
 D.value = SIREulers()[4]
+DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))
 ">Calculate</button><br><br>
 
 <label for = "SS">Still susceptible: </label>
@@ -54,6 +83,10 @@ D.value = SIREulers()[4]
 <output name = "D" id = "D" for = "D"></output><br>
 
 </form>
+
+
+<link rel="stylesheet" href="SIR_Form.css">
+<script type="text/javascript" src="SIR_Form.js"></script>
 
 
 </body>
