@@ -6,85 +6,125 @@
 // r0 is the initial recovered population
 // a is the rate of infection
 // b is the rate of recovery
+// This code was written for Hack the North East 2021 by Justin Melville and George Kent-Scheller.
+// v20210117
+// it incorporates data from:
+// CovidTracking.com,
+// " Epidemiological parameter review and comparative dynamics of influenza, respiratory syncytial virus, rhinovirus, human coronavirus, and adenovirus"
+// it is currently hosted on https://pandemicsimulator.neocities.org/.
 
 //global vars
-let t = 0;
-let t0 = 0;
-let ss;
-let s0 = 874961;
-let i0 = 0;
-let r0 = 0;
-let a = 2.2;
-let b = 3.0;
-
-function setCityData(city) {
-    if (city === "nyc")
-        s0 = 18804000;
-    if (city === "boston")
-        s0 = 4309000;
-}
-
-function setVirusData(virus) {
-    if (virus === "flu") {
-        a = 3;
-        b = 2.5;
-    }
-    if (virus === "cold") {
-        a = 1.5;
-        b = 2.8;
-    }
-}
-
+let pop = 874961.0
+let t = 20.0
+let t0 = 0.0
+let ss = 0.01
+let s0 = 0.995
+let i0 = 0.005
+let r0 = 0.0
+let a = 2.0
+let b = 1.0
+let dr = 0.01
 
 function dS(a,S,I){
-    return -a*S*I;
+    return -a*S*I
 }
 function dI(a,b,S,I){
-<<<<<<< HEAD
-	return (a*S*I -b*I);
-=======
-    return a*S*I -b*I;
->>>>>>> f68722fe182d9eb7f7b792b89a9437f402e7ea27
+    return a*S*I -b*I
 }
 function dR(b,I){
-    return b*I;
+    return b*I
 }
-<<<<<<< HEAD
-function SIREulers(t,t0,ss,s0,i0,r0,a,b){
-	var S = s0;
-    var I = i0;
-    var R = r0;
-	//var cstep = t0;
-    for(i=0;i< ((t-t0)/ss);i++){
-    	let check = dS(a,S,I)+ dR(b,I)+dI(a,b,S,I) == 0 
-    	let s = S+ss*dS(a,S,I);
-    	let i = I+ss*dI(a,b,S,I);
-=======
 function SIREulers(){
-    let S = s0;
-    let I = i0;
-    let R = r0;
-    //var cstep = t0;
-    for(let i=0;i< ((t-t0)/ss);i++){
-        let s = S+ss*dS(a,S,I);
-        let i = I+ss*dI(a,b,S,I);
->>>>>>> f68722fe182d9eb7f7b792b89a9437f402e7ea27
-        let r = R+ss*dR(b,I);
-        console.log("\t",S,"\t",I,"\t",R);
-        S=s;
-        I=i;
-        R=r;
-        //cstep++;
+    let S = s0
+    let I = i0
+    let R = r0
+    //var cstep = t0
+    for(let i = 0; i < ((t - t0) / ss); i++){
+        let s = S+ss*dS(a,S,I)
+        let i = I+ss*dI(a,b,S,I)
+        let r = R+ss*dR(b,I)
+        S = s>0?s:0
+        I = i>0?i:0
+        R = r>0?r:0
+        //cstep++
     }
-    return [S,I,R];
-}
-<<<<<<< HEAD
-s0 = 1000000;
-a = 0.5;
-b = 200000;
+    S = S * pop
+    I = I * pop
+    R = R * pop
+    let SS = Math.round(S)
+    let CI = Math.round(I)
+    let TI = Math.round(I + R)
+    let Rec = Math.round(R * (1 - dr))
+    let D = Math.round(R * dr)
 
-var k = SIREulers(20,0,0.001,s0,200,0,a,b);
-console.log(k[0],"\t",k[1],"\t",k[2]);
-console.log("rval = ",(a*s0)/b);
-=======
->>>>>>> f68722fe182d9eb7f7b792b89a9437f402e7ea27
+    return [SS, CI, TI, Rec, D]
+}
+function SIREulersPrt1(){
+    let S = s0
+    let I = i0
+    let R = r0
+    //var cstep = t0
+    for(let i = 0; i < ((t - t0) / ss); i++){
+        let s = S+ss*dS(a,S,I)
+        let i = I+ss*dI(a,b,S,I)
+        let r = R+ss*dR(b,I)
+        S = s>0?s:0
+        I = i>0?i:0
+        R = r>0?r:0
+        //cstep++
+    }
+    
+    return [S,R,I]
+}
+function dSv(a,S,I,vaxRate){
+    return -a*S*I -vaxRate;
+}
+function dRv(b,I,vaxRate){
+    return b*I+vaxRate
+}
+function SIREulersWVac(vaxtime,vaxRatePerWeek){
+    let S = s0
+    let I = i0
+    let R = r0
+    let array;  
+    if(vaxtime<t){
+        let tempT = t; 
+        t = vaxtime;
+        array =  SIREulersPrt1();
+        t0 = vaxtime;
+        t = tempT;
+        s0 = array[0];
+        i0 = array[1];
+        r0 = array[2];
+        
+        let S = s0
+        let I = i0
+        let R = r0
+        //var cstep = t0
+        for(let i = 0; i < ((t - t0) / ss); i++){
+            let s = S+ss*dSv(a,S,I,vaxRatePerWeek)
+            let i = I+ss*dI(a,b,S,I)
+            let r = R+ss*dR(b,I,vaxRatePerWeek)
+            S = s>0?s:0
+            I = i>0?i:0
+            R = r>0?r:0
+            //cstep++
+        }
+        S = S * pop
+        I = I * pop
+        R = R * pop
+        let SS = Math.round(S);
+        let CI = Math.round(I);
+        let TI = Math.round(I + R);
+        let Rec = Math.round(R * (1 - dr));
+        let D = Math.round(R * dr);
+
+        array =  [SS, CI, TI, Rec, D] ;
+    }
+    else{
+       array= SIREulers();
+    }
+
+    return array;
+}
+

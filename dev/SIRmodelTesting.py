@@ -1,4 +1,11 @@
 # test python file for testing sir model 
+# This code was written for Hack the North East 2021 by Justin Melville and George Kent-Scheller.
+# v20210117
+# it incorporates data from:
+# CovidTracking.com,
+# " Epidemiological parameter review and comparative dynamics of influenza, respiratory syncytial virus, rhinovirus, human coronavirus, and adenovirus"
+# it is currently hosted on https://pandemicsimulator.neocities.org/.
+
 def dy(y,t):
 	return (y*y+t)
 def EulerMethod(t,t0,y0,stepsize):

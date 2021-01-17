@@ -1,4 +1,11 @@
 
+// This code was written for Hack the North East 2021 by Justin Melville and George Kent-Scheller.
+// v20210117
+// it incorporates data from:
+// CovidTracking.com,
+// " Epidemiological parameter review and comparative dynamics of influenza, respiratory syncytial virus, rhinovirus, human coronavirus, and adenovirus"
+// it is currently hosted on https://pandemicsimulator.neocities.org/.
+
 async function getSIRfromData(t,state){// gets covid data from a certain state based on the day time converted to a string  state in state code abrevs
     let sp1 = "https://api.covidtracking.com/v1/states/";
     let sp3 = "/daily.json";
