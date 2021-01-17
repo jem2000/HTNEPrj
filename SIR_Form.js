@@ -8,7 +8,7 @@
 // b is the rate of recovery
 
 //global vars
-let pop = 874961.0
+let pop = 18804000.0
 let t = 20.0
 let t0 = 0.0
 let ss = 0.01
@@ -142,21 +142,21 @@ function DrawCircles(S,I,R){
 }
 
 const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
 const AnimateToTime = async () => {
-  let timefeild = document.getElementById('time')
-  let valtime = timefeild.value;
-  let array;
-  let infectedval =document.getElementById('infected').value;
-  setInitialInfectedData(infectedval);
-  for(i = 0;i<valtime;i++){
-     await sleep(200);
-     t = i;
-     array = SIREulers();
-     DrawCircles(array[0],array[1],array[2]);
-  }  
+    let timefeild = document.getElementById('time')
+    let valtime = timefeild.value;
+    let array;
+    let infectedval =document.getElementById('infected').value;
+    setInitialInfectedData(infectedval);
+    for(i = 0;i<valtime;i++){
+        await sleep(200);
+        t = i;
+        array = SIREulers();
+        DrawCircles(array[0],array[1],array[2]);
+    }
 }
 
 function setValues() {
@@ -199,7 +199,7 @@ async function getSIRfromData(t,state){// gets covid data from a certain state b
     console.log("Susceptible=",data[index].total-data[index].positive-data[index].death);
     console.log("Infected=",data[index].positive);
     console.log("recovered=",data[index].death);
-     console.log(S,I,D);
+    console.log(S,I,D);
     //console.log(typeof data[index].death);
     //console.log(data.length);
 
@@ -233,14 +233,14 @@ asyncButton.addEventListener('click', async () => {
         // let API_D = document.getElementById('API_D')
         console.log(t);
         console.log("time value",valtime);
-        let array;    
+        let array;
         if (pop === 874961.0)
             array = await getSIRfromData(t*7, 'ca')
-        if (pop === 18804000.0) 
+        if (pop === 18804000.0)
             array = await getSIRfromData(t*7, 'ny')
         if (pop === 4309000.0)
             array = await getSIRfromData(t*7, 'ma')
-    
+
         API_SS.value = array[0]
         API_CI.value = array[1]
         API_D.value = array[2]
@@ -251,24 +251,16 @@ asyncButton.addEventListener('click', async () => {
         API_CI.value = `There was a problem: ${error}`;
         API_D.value = `There was a problem: ${error}`;
     }
-   
+
 })
 
-
-// function setAPIValues() {
-//     let API_SS = document.getElementById('API_SS')
-//     let API_CI = document.getElementById('API_CI')
-//     let API_D = document.getElementById('API_D')
-    
-//     let array;
-//     if (pop === 874961.0)
-//         array = getSIRfromData(t, 'ca')
-//     if (pop === 18804000.0) 
-//         array = getSIRfromData(t, 'ny')
-//     if (pop === 4309000.0)
-//         array = getSIRfromData(t, 'ma')
-    
-//     API_SS.value = array[0]
-//     API_CI.value = array[1]
-//     API_D.value = array[2]
-// }
+function hide() {
+    let canvas = document.getElementById('myCanvas')
+    let checkbox = document.getElementById('show1')
+    if (checkbox.checked) {
+        canvas.style.display = "block";
+    }
+    else {
+        canvas.style.display = "none";
+    }
+}
