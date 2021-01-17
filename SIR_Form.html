@@ -52,15 +52,27 @@
 <form class="form">
     <header class = "title">SIR Covid-19 Visualizer</header><br>
     <label for="viruses">Select which infectious virus you would like to model:</label>
-    <select name="viruses" id="viruses" oninput="setVirusData(value)">
+    <select name="viruses" id="viruses" oninput="
+    setVirusData(value);
+    setValues();
+    clear();
+    drawApiData();
+    drawModelData();
+    ">
         <option value="covid">Covid-19</option>
         <option value="flu">Influenza</option>
         <option value="cold">The common cold</option>
     </select><br><br>
 
     <label for="cities">Select which city you would like to model:</label>
-    <select name="cities" id="cities" oninput="setCityData(value)
-moveMap(value)"
+    <select name="cities" id="cities" oninput="
+setCityData(value);
+clear();
+moveMap(value);
+setValues();
+drawApiData();
+drawModelData();
+"
     >
         <option value="nyc">New York City</option>
         <option value="sf">San Francisco</option>
@@ -70,21 +82,21 @@ moveMap(value)"
 
 
     <label for = "infected">How many people were initially infected? </label>
-    <input type = "number" id = "infected" name = "infected" min="1" max="999" oninput="setInitialInfectedData(parseInt(infected.value))
-    setValues()
+    <input type = "number" id = "infected" name = "infected" min="1" max="18804000" oninput="setInitialInfectedData(parseInt(infected.value))
+    setValues();
     //setAPIValues()
     DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
 
     <label for = "time">How long has the virus been spreading? (days): </label>
     <input type = "number" id = "time" min="0" max="999" name = "time" oninput="setTimeLength(parseInt(time.value))
-    setValues()
+    setValues();
+    drawModelData();
     //setAPIValues()
-    DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
+   "><br><br>
+    
     <button class = "retrieve" type = "button" id = "button" onclick="
-    setValues()
-    //setAPIValues()
-    DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))
-">Retrieve</button><br><br>
+     drawApiData();
+    ">Retrieve</button><br><br>
 
     <div class = "SIR_values">
         <label class = "small_header">Data from SIR Model</label><br><br>
@@ -104,6 +116,8 @@ moveMap(value)"
         <output name = "D" id = "D" for = "D"></output><br><br>
         <input type="checkbox" id="show1" name="show2" value="true" checked onclick = "hide()">
         <label for="show1">Show</label><br>
+        <button class = "animate" type = "button" id = "Animate" onclick="
+        ">Animate</button><br>
     </div>
 
     <div class = "API_values">
@@ -114,7 +128,7 @@ moveMap(value)"
         <output name = "API_CI" id = "API_CI" for = "API_CI"></output><br>
         <label for = "API_D">Deaths: </label>
         <output name = "API_D" id = "API_D" for = "API_D"></output><br><br><br><br>
-        <input type="checkbox" id="show2" name="show2" value="true">
+        <input type="checkbox" id="show2" name="show2" value="true" checked onclick = "hide()">
         <label for="show2">Show</label><br>
 
     </div>

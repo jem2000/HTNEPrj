@@ -18,7 +18,11 @@ let r0 = 0.0
 let a = 2.0
 let b = 1.0
 let dr = 0.01
-
+let boolAnimating = false;
+let apiRetived = false;
+let show1 = true;
+let show2 = false;
+let sleepdelay = 200;
 function setCityData(city) {
     if (city === "sf") {
         pop = 874961.0
@@ -30,21 +34,21 @@ function setCityData(city) {
         pop = 4309000.0
     }
 }
-
+//numbers from:" Epidemiological parameter review and comparative dynamics of influenza, respiratory syncytial virus, rhinovirus, human coronavirus, and adenovirus
 function setVirusData(virus) {
     if (virus === "covid") {
-        a = 2.0
+        a = 3.0
         b = 1.0
         dr = 0.01
     }
     if (virus === "flu") {
-        a = 3.0
-        b = 2.5
+        a = 2.61
+        b = 1
         dr = 0.05
     }
     if (virus === "cold") {
-        a = 1.5
-        b = 2.8
+        a = 2.36
+        b = 1
         dr = 0.001
     }
 }
@@ -102,6 +106,9 @@ function DrawCircles(S,I,R){
     let c = document.getElementById("myCanvas");
     let N = S+I+R;
     let ctx = c.getContext("2d");
+    let c1 = "red";
+    let c2 = "black";
+    let c3 = "green"; 
     ctx.clearRect(0, 0, c.width, c.height);
     let shortervar = (c.width<c.height)? c.width:c.height;
     shortervar = shortervar/2;
@@ -110,10 +117,10 @@ function DrawCircles(S,I,R){
     let sizechangeR = R/N;
 
 
-    centerX = c.width/2;
-    centerY = c.height/2;
+    let centerX = c.width/2;
+    let centerY = c.height/2;
     ctx.globalAlpha = 0.70;
-    ctx.fillStyle = "red";
+    ctx.fillStyle = c1;
     ctx.beginPath();
     ctx.arc(centerX, centerY, shortervar*sizechangeI, 0, 2 * Math.PI);
     ctx.fill();
@@ -122,7 +129,7 @@ function DrawCircles(S,I,R){
     if(R>I){
         ctx.globalAlpha = 0.5;
     }
-    ctx.fillStyle = "black";
+    ctx.fillStyle = c2;
     ctx.beginPath();
     ctx.arc(centerX, centerY, shortervar*sizechangeR, 0, 2 * Math.PI);
     ctx.stroke();
@@ -133,11 +140,28 @@ function DrawCircles(S,I,R){
     else{
         ctx.globalAlpha = 0.95;
     }
-    ctx.fillStyle = "green";
+    ctx.fillStyle = c3;
     ctx.beginPath();
     ctx.arc(centerX, centerY, shortervar*sizechangeS, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.fill();
+
+    ctx.globalAlpha = 0.95;
+    ctx.fillStyle = "black";
+    ctx.font = "30px Arial";
+    let fillstring = "Day:"+Math.round(t*7);
+    ctx.fillText(fillstring, centerX, c.height-50);
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, c.height-200, 260, 160);
+    ctx.fillStyle = c3;
+    fillstring = "[Susceptible]";
+    ctx.fillText(fillstring, 0, c.height-50);
+    ctx.fillStyle = c2;
+    fillstring = "[Recovered/Dead]";
+    ctx.fillText(fillstring, 0, c.height-100);
+    ctx.fillStyle = c1;
+    fillstring = "[Infected]";
+    ctx.fillText(fillstring, 0, c.height-150);
 
 }
 
@@ -146,16 +170,20 @@ const sleep = (milliseconds) => {
 }
 
 const AnimateToTime = async () => {
-    let timefeild = document.getElementById('time')
-    let valtime = timefeild.value;
-    let array;
-    let infectedval =document.getElementById('infected').value;
-    setInitialInfectedData(infectedval);
-    for(i = 0;i<valtime;i++){
-        await sleep(200);
-        t = i;
-        array = SIREulers();
-        DrawCircles(array[0],array[1],array[2]);
+    if(!boolAnimating&&show1){
+        boolAnimating = true;
+        let timefeild = document.getElementById('time')
+        let valtime = timefeild.value;
+        let array;
+        let infectedval =document.getElementById('infected').value;
+        setInitialInfectedData(infectedval);
+        for(i = 0;i<valtime;i++){
+            await sleep(sleepdelay);
+            t = i/7;
+            array = SIREulers();
+            DrawCircles(array[0],array[1],array[2]);
+        }
+        boolAnimating = false;
     }
 }
 
@@ -213,7 +241,12 @@ async function getData(url) {
     const response = await fetch(url);
     return response.json();
 }
+const animatebtn = document.getElementById('Animate');
 
+animatebtn.addEventListener('click', async () => {
+    console.log('clicked')
+    AnimateToTime();
+})
 
 const asyncButton = document.getElementById('button');
 
@@ -226,7 +259,6 @@ asyncButton.addEventListener('click', async () => {
     let API_D = document.getElementById('API_D')
     let timefeild = document.getElementById('time')
     let valtime = timefeild.value;
-    AnimateToTime();
     try {
         // let API_SS = document.getElementById('API_SS')
         // let API_CI = document.getElementById('API_CI')
@@ -244,6 +276,8 @@ asyncButton.addEventListener('click', async () => {
         API_SS.value = array[0]
         API_CI.value = array[1]
         API_D.value = array[2]
+        apiRetived = true;
+        drawApiData();
         console.log(array[0],array[1],array[2]);
 
     } catch(error) {
@@ -256,11 +290,74 @@ asyncButton.addEventListener('click', async () => {
 
 function hide() {
     let canvas = document.getElementById('myCanvas')
-    let checkbox = document.getElementById('show1')
-    if (checkbox.checked) {
-        canvas.style.display = "block";
+        let checkbox1 = document.getElementById('show1')
+        let checkbox2 = document.getElementById('show2')
+    if(!boolAnimating){
+        
+        let ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (checkbox1.checked || checkbox2.checked) {
+            canvas.style.display = "block";
+        }
+        else {
+            canvas.style.display = "none";
+        }
+        if(show1){
+            show1 = false;
+            checkbox1.checked = false;
+            show1 = checkbox1.checked ;
+            show2 = checkbox2.checked ;
+        }
+        else if(show2){
+            show2 = false;
+            checkbox2.checked = false;
+            show1 = checkbox1.checked ;
+            show2 = checkbox2.checked ;
+        }
+        else{
+            show1 = checkbox1.checked ;
+            show2 = checkbox2.checked ;
+        }
+        drawApiData();
+        drawModelData();
     }
-    else {
-        canvas.style.display = "none";
+    else{
+        checkbox1.checked = show1 ;
+        checkbox2.checked = show2;
     }
 }
+function drawApiData(){
+    if(show2&&apiRetived){
+        let SS = document.getElementById('API_SS');
+        let CI = document.getElementById('API_CI');
+        let D = document.getElementById('API_D');
+        DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(D.value));
+    }
+}
+function drawModelData(){
+    let SS = document.getElementById('SS')
+    let CI = document.getElementById('CI')
+    let TI = document.getElementById('TI')
+    let R = document.getElementById('R')
+    let D = document.getElementById('D')
+    if(show1){
+         DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value));
+    } 
+}
+function clear(){
+    let canvas = document.getElementById('myCanvas')
+    let ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+let check2 = document.getElementById('show2')
+check2.checked = false;
+let check1 = document.getElementById('show1')
+check1.checked = true;
+
+let initialInf= document.getElementById('infected');
+initialInf.value = Math.round(pop*i0);
+let initialTime = document.getElementById('time')
+initialTime.value = Math.round(t*7);
+setValues();
+drawModelData();
