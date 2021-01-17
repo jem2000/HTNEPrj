@@ -1,7 +1,7 @@
 # SIR Covid-19 Visualizer
 A repository for all our code worked on during Hack The North East Hack-a-thon to build our SIR Covid-19 Visualizer
 
-##Domain Name
+## Domain Name
 
 This project was built as a way to visualize the spread of infectious diseases, especially Covid-19 using easy-to-understand graphics. To do this, we used an SIR model, which is one of the simplest differential equations models for diseases. The name SIR comes from Susceptible, Infected and Recovered, which are the three compartments the model uses. 
 
