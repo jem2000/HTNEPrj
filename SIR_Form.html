@@ -22,6 +22,28 @@
         zoom: 12
 
     });
+
+    function moveMap(city) {
+        console.log('fly')
+        if (cities.value === "sf") {
+            map.flyTo({
+                center: [-122.4862, 37.7694],
+                essential: true
+            });
+        }
+        if (cities.value === "nyc") {
+            map.flyTo({
+                center: [-73.9665, 40.7812],
+                essential: true
+            });
+        }
+        if (cities.value === "boston") {
+            map.flyTo({
+                center: [-71.0656, 42.3551],
+                essential: true
+            });
+        }
+    }
 </script>
 
 <form class="form">
@@ -33,61 +55,67 @@
 </select><br><br>
 
 <label for="cities">Select which city you would like to model:</label>
-<select name="cities" id="cities" oninput="setCityData(value)">
+<select name="cities" id="cities" oninput="setCityData(value)
+moveMap(value)"
+>
     <option value="sf">San Francisco</option>
     <option value="nyc">New York City</option>
     <option value="boston">Boston</option>
 </select><br><br>
 
+
+
 <label for = "infected">How many people were initially infected? </label>
 <input type = "number" id = "infected" name = "infected" oninput="setInitialInfectedData(parseInt(infected.value))
-SS.value = SIREulers()[0]
-CI.value = SIREulers()[1]
-TI.value = SIREulers()[2]
-R.value = SIREulers()[3]
-D.value = SIREulers()[4]
+setValues()
+setAPIValues()
 DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
 
-<label for = "time">How long has the virus been spreading? (weeks): </label>
+<label for = "time">How long has the virus been spreading? (days): </label>
 <input type = "number" id = "time" name = "time" oninput="setTimeLength(parseInt(time.value))
-SS.value = SIREulers()[0]
-CI.value = SIREulers()[1]
-TI.value = SIREulers()[2]
-R.value = SIREulers()[3]
-D.value = SIREulers()[4]
+setValues()
+setAPIValues()
 DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
 
 
-<button type = "button" onclick="
-SS.value = SIREulers()[0]
-CI.value = SIREulers()[1]
-TI.value = SIREulers()[2]
-R.value = SIREulers()[3]
-D.value = SIREulers()[4]
+<button type = "button" id = "button" onclick="
+setValues()
+setAPIValues()
 DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))
 ">Calculate</button><br><br>
 
-<label for = "SS">Still susceptible: </label>
-<output name = "SS" id = "SS" for = "SS"></output><br>
+<div class = "SIR_values">
+    <label for = "SS">Still susceptible: </label>
+    <output name = "SS" id = "SS" for = "SS"></output><br>
 
-<label for = "CI">Currently infected: </label>
-<output name = "CI" id = "CI" for = "CI"></output><br>
+    <label for = "CI">Currently infected: </label>
+    <output name = "CI" id = "CI" for = "CI"></output><br>
 
-<label for = "TI">Total infected: </label>
-<output name = "TI" id = "TI" for = "TI"></output><br>
+    <label for = "TI">Total infected: </label>
+    <output name = "TI" id = "TI" for = "TI"></output><br>
 
-<label for = "R">Recovered: </label>
-<output name = "R" id = "R" for = "R"></output><br>
+    <label for = "R">Recovered: </label>
+    <output name = "R" id = "R" for = "R"></output><br>
 
-<label for = "D">Dead: </label>
-<output name = "D" id = "D" for = "D"></output><br>
+    <label for = "D">Dead: </label>
+    <output name = "D" id = "D" for = "D"></output><br>
+</div>
+
+<div class = "API_values">
+    <label for = "API_SS">Still susceptible: </label>
+    <output name = "API_SS" id = "API_SS" for = "API_SS"></output><br>
+    <label for = "API_CI">Currently infected: </label>
+    <output name = "API_CI" id = "API_CI" for = "API_CI"></output><br>
+    <label for = "API_D">Dead: </label>
+    <output name = "API_D" id = "API_D" for = "API_D"></output><br>
+
+</div>
 
 </form>
 
 
 <link rel="stylesheet" href="SIR_Form.css">
 <script type="text/javascript" src="SIR_Form.js"></script>
-
 
 </body>
 </html>
