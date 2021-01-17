@@ -1,5 +1,6 @@
 
 
+
 .form {
     border: cornflowerblue;
     background-color: antiquewhite;
@@ -12,6 +13,14 @@
 
 .map {
     float: left;
+}
+
+.SIR_values {
+    float: left;
+}
+
+.API_values {
+    float: right;
 }
 
 #container {
