@@ -47,3 +47,12 @@ canvas {
     right: 0px;
 
 }
+
+.small_header {
+    font-weight: bold;
+}
+
+.retrieve {
+    float: right;
+    margin-right: 140px;
+}
