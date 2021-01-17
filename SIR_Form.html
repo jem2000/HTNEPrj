@@ -80,14 +80,14 @@ moveMap(value)"
     setValues()
     //setAPIValues()
     DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
-    <button type = "button" id = "button" onclick="
+    <button class = "retrieve" type = "button" id = "button" onclick="
     setValues()
     //setAPIValues()
     DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))
-">Calculate</button><br><br>
+">Retrieve</button><br><br>
 
     <div class = "SIR_values">
-        <label>Data from SIR Model</label><br><br>
+        <label class = "small_header">Data from SIR Model</label><br><br>
         <label for = "SS">Still susceptible: </label>
         <output name = "SS" id = "SS" for = "SS"></output><br>
 
@@ -102,19 +102,19 @@ moveMap(value)"
 
         <label for = "D">Deaths: </label>
         <output name = "D" id = "D" for = "D"></output><br><br>
-        <input type="checkbox" id="show1" name="show2" value="show1" checked>
+        <input type="checkbox" id="show1" name="show2" value="true" checked onclick = "hide()">
         <label for="show1">Show</label><br>
     </div>
 
     <div class = "API_values">
-        <label>Data from CovidTracking.com</label><br><br>
+        <label class = "small_header">Data from CovidTracking.com</label><br><br>
         <label for = "API_SS">Still susceptible: </label>
         <output name = "API_SS" id = "API_SS" for = "API_SS"></output><br>
         <label for = "API_CI">Currently infected: </label>
         <output name = "API_CI" id = "API_CI" for = "API_CI"></output><br>
         <label for = "API_D">Deaths: </label>
         <output name = "API_D" id = "API_D" for = "API_D"></output><br><br><br><br>
-        <input type="checkbox" id="show2" name="show2" value="show2">
+        <input type="checkbox" id="show2" name="show2" value="true">
         <label for="show2">Show</label><br>
 
     </div>
