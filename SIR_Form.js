@@ -22,7 +22,7 @@ let boolAnimating = false;
 let apiRetived = false;
 let show1 = true;
 let show2 = false;
-let sleepdelay = 200;
+let sleepdelay = 80;
 function setCityData(city) {
     if (city === "sf") {
         pop = 874961.0
