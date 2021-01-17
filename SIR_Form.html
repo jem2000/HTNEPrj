@@ -66,22 +66,20 @@ moveMap(value)"
 
 
 <label for = "infected">How many people were initially infected? </label>
-<input type = "number" id = "infected" name = "infected" oninput="setInitialInfectedData(parseInt(infected.value))
-setValues()
-setAPIValues()
-DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
+<input type = "number" id = "infected" name = "infected" min="1" max="999" oninput="setInitialInfectedData(parseInt(infected.value))
+    setValues()
+    //setAPIValues()
+    DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
 
 <label for = "time">How long has the virus been spreading? (days): </label>
-<input type = "number" id = "time" name = "time" oninput="setTimeLength(parseInt(time.value))
-setValues()
-setAPIValues()
-DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
-
-
+<input type = "number" id = "time" min="0" max="999" name = "time" oninput="setTimeLength(parseInt(time.value))
+    setValues()
+    //setAPIValues()
+    DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
 <button type = "button" id = "button" onclick="
-setValues()
-setAPIValues()
-DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))
+    setValues()
+    //setAPIValues()
+    DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))
 ">Calculate</button><br><br>
 
 <div class = "SIR_values">

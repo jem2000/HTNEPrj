@@ -141,6 +141,24 @@ function DrawCircles(S,I,R){
 
 }
 
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+const AnimateToTime = async () => {
+  let timefeild = document.getElementById('time')
+  let valtime = timefeild.value;
+  let array;
+  let infectedval =document.getElementById('infected').value;
+  setInitialInfectedData(infectedval);
+  for(i = 0;i<valtime;i++){
+     await sleep(200);
+     t = i;
+     array = SIREulers();
+     DrawCircles(array[0],array[1],array[2]);
+  }  
+}
+
 function setValues() {
     let SS = document.getElementById('SS')
     let CI = document.getElementById('CI')
@@ -168,11 +186,11 @@ async function getSIRfromData(t,state){// gets covid data from a certain state b
 
     const data = await getData(fullstring);
 
-    let index = (data.length -1) - t;
+    let index = Math.round((data.length -1) - t);
     index = (index<0)?0:index;
 
     console.log("index=",index);
-
+    console.log(data);
     let S = await data[index].total-data[index].positive-data[index].death;
     let I = await data[index].positive;
     let D = await data[index].death ;
@@ -181,8 +199,9 @@ async function getSIRfromData(t,state){// gets covid data from a certain state b
     console.log("Susceptible=",data[index].total-data[index].positive-data[index].death);
     console.log("Infected=",data[index].positive);
     console.log("recovered=",data[index].death);
-    console.log(typeof data[index].death);
-    console.log(data.length);
+     console.log(S,I,D);
+    //console.log(typeof data[index].death);
+    //console.log(data.length);
 
 
     return [S, I, D];
@@ -195,36 +214,61 @@ async function getData(url) {
     return response.json();
 }
 
-const D = document.getElementById('D');
-const asyncButton = document.getElementById('asyncButton');
+
+const asyncButton = document.getElementById('button');
+
+
 
 asyncButton.addEventListener('click', async () => {
     console.log('clicked')
-    try {
-        var array = (await getSIRfromData(52, 'ca'));
-        D.value = array[0];
-
-
-    } catch(error) {
-        D.value = `There was a problem: ${error}`;
-    }
-})
-
-
-function setAPIValues() {
     let API_SS = document.getElementById('API_SS')
     let API_CI = document.getElementById('API_CI')
     let API_D = document.getElementById('API_D')
+    let timefeild = document.getElementById('time')
+    let valtime = timefeild.value;
+    AnimateToTime();
+    try {
+        // let API_SS = document.getElementById('API_SS')
+        // let API_CI = document.getElementById('API_CI')
+        // let API_D = document.getElementById('API_D')
+        console.log(t);
+        console.log("time value",valtime);
+        let array;    
+        if (pop === 874961.0)
+            array = await getSIRfromData(t*7, 'ca')
+        if (pop === 18804000.0) 
+            array = await getSIRfromData(t*7, 'ny')
+        if (pop === 4309000.0)
+            array = await getSIRfromData(t*7, 'ma')
     
-    let array;
-    if (pop === 874961.0)
-        array = getSIRfromData(t, 'ca')
-    if (pop === 18804000.0) 
-        array = getSIRfromData(t, 'ny')
-    if (pop === 4309000.0)
-        array = getSIRfromData(t, 'ma')
+        API_SS.value = array[0]
+        API_CI.value = array[1]
+        API_D.value = array[2]
+        console.log(array[0],array[1],array[2]);
+
+    } catch(error) {
+        API_SS.value = `There was a problem: ${error}`;
+        API_CI.value = `There was a problem: ${error}`;
+        API_D.value = `There was a problem: ${error}`;
+    }
+   
+})
+
+
+// function setAPIValues() {
+//     let API_SS = document.getElementById('API_SS')
+//     let API_CI = document.getElementById('API_CI')
+//     let API_D = document.getElementById('API_D')
     
-    API_SS.value = array[0]
-    API_CI.value = array[1]
-    API_D.value = array[2]
-}
+//     let array;
+//     if (pop === 874961.0)
+//         array = getSIRfromData(t, 'ca')
+//     if (pop === 18804000.0) 
+//         array = getSIRfromData(t, 'ny')
+//     if (pop === 4309000.0)
+//         array = getSIRfromData(t, 'ma')
+    
+//     API_SS.value = array[0]
+//     API_CI.value = array[1]
+//     API_D.value = array[2]
+// }
