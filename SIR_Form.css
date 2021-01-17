@@ -1,18 +1,21 @@
 
 
-
-.form {
+.form-container {
     border: cornflowerblue;
     background-color: antiquewhite;
-    width: fit-content;
+    width: 500px;
     float: right;
-    margin-right: 50px;
-    margin-top: 50px;
+    margin-right: 80px;
     padding: 10px;
+    height: 880px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .map {
     float: left;
+    position: absolute;
 }
 
 .SIR_values {
@@ -21,6 +24,11 @@
 
 .API_values {
     float: right;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
 }
 
 #container {
@@ -32,4 +40,10 @@
 }
 canvas {
     border: 1px solid black;
+}
+
+.signature {
+    bottom: 20px;
+    right: 0px;
+
 }
