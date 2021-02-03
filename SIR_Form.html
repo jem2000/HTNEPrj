@@ -12,147 +12,174 @@
     <title>SIR Covid Visualizer</title>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="SIR_Form.css">
 </head>
 
 
 
-<body style="background-color: azure">
-<div id = 'container' style='width: 1200px; height: 900px;'>
-    <div id='map' class = 'map' style='width: 1200px; height: 900px;'></div>
-    <canvas id="myCanvas"  width= "1200" height = "900px" ></canvas>
+<body>
+<div id = 'container' class = "map-container">
+    <div id='map' class ='map' style= 'width: 100%; height: 500px;'></div>
+    <canvas id="myCanvas"  class = 'canvas'style= 'width: 100%; height: 500px;' width= "1200" height = "900px" ></canvas>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYXJrdHlrMjAwMCIsImEiOiJja2p5eTZzb2QwMjhrMm5vNTlqbHp6N3c4In0.wzX0g3xgiMMS2_dy2uHFWQ';
+        let map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-73.9665, 40.7812],
+            zoom: 12
+        });
+
+        function moveMap(city) {
+            console.log('fly')
+            if (cities.value === "sf") {
+                map.flyTo({
+                    center: [-122.45, 37.749],
+                    essential: true
+                });
+            }
+            if (cities.value === "nyc") {
+                map.flyTo({
+                    center: [-73.9665, 40.7812],
+                    essential: true
+                });
+            }
+            if (cities.value === "boston") {
+                map.flyTo({
+                    center: [-71.0656, 42.3551],
+                    essential: true
+                });
+            }
+        }
+    </script>
+
 </div>
-
-
-<script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYXJrdHlrMjAwMCIsImEiOiJja2p5eTZzb2QwMjhrMm5vNTlqbHp6N3c4In0.wzX0g3xgiMMS2_dy2uHFWQ';
-    let map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [-73.9665, 40.7812],
-        zoom: 12
-    });
-
-    function moveMap(city) {
-        console.log('fly')
-        if (cities.value === "sf") {
-            map.flyTo({
-                center: [-122.45, 37.749],
-                essential: true
-            });
-        }
-        if (cities.value === "nyc") {
-            map.flyTo({
-                center: [-73.9665, 40.7812],
-                essential: true
-            });
-        }
-        if (cities.value === "boston") {
-            map.flyTo({
-                center: [-71.0656, 42.3551],
-                essential: true
-            });
-        }
-    }
-</script>
 
 <div class = "form-container">
-<form class="form">
-    <header class = "title">SIR Covid-19 Visualizer</header><br>
-    <label for="viruses">Select which infectious virus you would like to model:</label>
-    <select name="viruses" id="viruses" oninput="
-    setVirusData(value);
-    setValues();
-    clear();
-    drawApiData();
-    drawModelData();
-    ">
-        <option value="covid">Covid-19</option>
-        <option value="flu">Influenza</option>
-        <option value="cold">The common cold</option>
-    </select><br><br>
+    <form class="form">
+        <header class = "title">SIR Covid-19 Visualizer</header><br>
+        <label for="viruses">Select which infectious virus you would like to model:</label>
+        <select 
+            name="viruses" 
+            id="viruses" 
+            class = "dropdowns"
+            oninput="
+                setVirusData(value);
+                setValues();
+                clear();
+                drawApiData();
+                drawModelData();"
+        >
+            <option value="covid">Covid-19</option>
+            <option value="flu">Influenza</option>
+            <option value="cold">The common cold</option>
+        </select><br>
 
-    <label for="cities">Select which city you would like to model:</label>
-    <select name="cities" id="cities" oninput="
-setCityData(value);
-clear();
-moveMap(value);
-setValues();
-drawApiData();
-drawModelData();
-"
-    >
-        <option value="nyc">New York City</option>
-        <option value="sf">San Francisco</option>
-        <option value="boston">Boston</option>
-    </select><br><br>
+        <label for="cities">Select which city you would like to model:</label>
+        <select name="cities" 
+        id="cities"
+        class = "dropdowns" 
+        oninput="
+            setCityData(value);
+            clear();
+            moveMap(value);
+            setValues();
+            drawApiData();
+            drawModelData();"
+        >
+            <option value="nyc">New York City</option>
+            <option value="sf">San Francisco</option>
+            <option value="boston">Boston</option>
+        </select><br>
 
+        <label for = "infected">How many people were initially infected? </label>
+        <input 
+            type = "number"
+            id = "infected" 
+            class = "typeIns"
+            name = "infected" 
+            min="1" 
+            max="18804000" 
+            oninput="
+                setInitialInfectedData(parseInt(infected.value));
+                setValues();
+                DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value));
+            ">
+        <br>
+        <label for = "time">How long has the virus been spreading? (days): </label>
+        <input 
+            type = "number" 
+            id = "time" 
+            class = "typeIns"
+            min="0" 
+            max="999" 
+            name = "time" 
+            oninput=
+                "setTimeLength(parseInt(time.value));
+                setValues();
+                drawModelData();
+                "
+        >
+        <br>
+        
+        
+        <br>
 
+        <div class = "SIR_values">
+            <label class = "small_header">Data from SIR Model</label><br><br>
+            <label for = "SS">Still susceptible: </label>
+            <output name = "SS" id = "SS" for = "SS"></output><br>
 
-    <label for = "infected">How many people were initially infected? </label>
-    <input type = "number" id = "infected" name = "infected" min="1" max="18804000" oninput="setInitialInfectedData(parseInt(infected.value))
-    setValues();
-    //setAPIValues()
-    DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value))"><br><br>
+            <label for = "CI">Currently infected: </label>
+            <output name = "CI" id = "CI" for = "CI"></output><br>
 
-    <label for = "time">How long has the virus been spreading? (days): </label>
-    <input type = "number" id = "time" min="0" max="999" name = "time" oninput="setTimeLength(parseInt(time.value))
-    setValues();
-    drawModelData();
-    //setAPIValues()
-   "><br><br>
-    
-    <button class = "retrieve" type = "button" id = "button" onclick="
-     drawApiData();
-    ">Retrieve</button><br><br>
+            <label for = "D">Deaths: </label>
+            <output name = "D" id = "D" for = "D"></output><br>
 
-    <div class = "SIR_values">
-        <label class = "small_header">Data from SIR Model</label><br><br>
-        <label for = "SS">Still susceptible: </label>
-        <output name = "SS" id = "SS" for = "SS"></output><br>
+            <label for = "TI">Total infected: </label>
+            <output name = "TI" id = "TI" for = "TI"></output><br>
 
-        <label for = "CI">Currently infected: </label>
-        <output name = "CI" id = "CI" for = "CI"></output><br>
+            <label for = "R">Recovered: </label>
+            <output name = "R" id = "R" for = "R"></output><br><br><br>
+            <input type="checkbox" id="show1" name="show2" value="true" checked onclick = "hide()">
+            <label for="show1">Show</label><br><br>
+            <button class = "retrieve" type = "button" id = "Animate" onclick="
+            ">Animate</button><br>
+        </div>
 
-        <label for = "TI">Total infected: </label>
-        <output name = "TI" id = "TI" for = "TI"></output><br>
+        <div class = "API_values">
+            <label class = "small_header">Data from CovidTracking.com</label><br><br>
+            <label for = "API_SS">Still susceptible: </label>
+            <output name = "API_SS" id = "API_SS" for = "API_SS"></output><br>
+            <label for = "API_CI">Currently infected: </label>
+            <output name = "API_CI" id = "API_CI" for = "API_CI"></output><br>
+            <label for = "API_D">Deaths: </label>
+            <output name = "API_D" id = "API_D" for = "API_D"></output><br><br><br>
+            <button 
+            class = "retrieve" 
+            type = "button" 
+            id = "button" 
+            onclick="
+                drawApiData();
+        ">Retrieve</button><br><br>
+            <input type="checkbox" id="show2" name="show2" value="true" checked onclick = "hide()">
+            <label for="show2">Show</label><br>
 
-        <label for = "R">Recovered: </label>
-        <output name = "R" id = "R" for = "R"></output><br>
+        </div>
 
-        <label for = "D">Deaths: </label>
-        <output name = "D" id = "D" for = "D"></output><br><br>
-        <input type="checkbox" id="show1" name="show2" value="true" checked onclick = "hide()">
-        <label for="show1">Show</label><br><br>
-        <button class = "animate" type = "button" id = "Animate" onclick="
-        ">Animate</button><br>
+    </form>
+    <div class = "description">
+        <div>This webpage is designed to help show how a virus such as Covid-19 spreads using an SIR model.</div><br>
+        <div>It shows ratios of susceptible, infected, and recovered people as a percentage of the total population of a city.</div><br>
+        <div>In order to display the model, please enter values for the initial infection numbers and the length of time the virus has spread.</div><br>
+        <div>Hitting 'retrieve' displays the actual covid statistics for the given input.</div><br>
+        <div>Animate will show the changing ratios from day 1 to the given time. Only works for SIR model</div>
     </div>
-
-    <div class = "API_values">
-        <label class = "small_header">Data from CovidTracking.com</label><br><br>
-        <label for = "API_SS">Still susceptible: </label>
-        <output name = "API_SS" id = "API_SS" for = "API_SS"></output><br>
-        <label for = "API_CI">Currently infected: </label>
-        <output name = "API_CI" id = "API_CI" for = "API_CI"></output><br>
-        <label for = "API_D">Deaths: </label>
-        <output name = "API_D" id = "API_D" for = "API_D"></output><br><br><br><br>
-        <input type="checkbox" id="show2" name="show2" value="true" checked onclick = "hide()">
-        <label for="show2">Show</label><br>
-
-    </div>
-
-
-</form>
-<div class = "description">
-    <div>This webpage is designed to help show how a virus such as Covid-19 spreads using an SIR model.</div><br>
-    <div>It shows ratios of susceptible, infected, and recovered people as a percentage of the total population of a city.</div><br>
-    <div>In order to display the model, please enter values for the initial infection numbers and the length of time the virus has spread.</div><br>
-    <div>Hitting 'retrieve' displays the actual covid statistics for the given input.</div><br>
-    <div>Animate will show the changing ratios from day 1 to the given time. Only works for SIR model</div>
-</div>
-<div class = "signature">Built by Justin Melville and George Kent-Scheller</div>
+    <div class = "signature">Built by Justin Melville and George Kent-Scheller</div>
 </div>
 
-<link rel="stylesheet" href="SIR_Form.css">
+
 <script type="text/javascript" src="SIR_Form.js"></script>
 
 

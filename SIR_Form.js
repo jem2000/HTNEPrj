@@ -110,6 +110,9 @@ function SIREulers(){
 // Initialize and add the map
 function DrawCircles(S,I,R){
     let c = document.getElementById("myCanvas");
+    if(S<0)S=0;
+    if(I<0)I=0;
+    if(R<0)R=0;
     let N = S+I+R;
     let ctx = c.getContext("2d");
     let c1 = "red";
@@ -125,40 +128,56 @@ function DrawCircles(S,I,R){
 
     let centerX = c.width/2;
     let centerY = c.height/2;
-    ctx.globalAlpha = 0.70;
-    ctx.fillStyle = c1;
+    ctx.globalAlpha = 0.80;
+    let feather = 1.25
+    let grd = ctx.createRadialGradient(centerX,centerY,shortervar*sizechangeI/feather,centerX,centerY,shortervar*sizechangeI);
+    grd.addColorStop(0,c1);
+    grd.addColorStop(1,"transparent");
+    let grd2 = ctx.createRadialGradient(centerX,centerY,shortervar*sizechangeR/feather,centerX,centerY,shortervar*sizechangeR);
+    grd2.addColorStop(0,c2);
+    grd2.addColorStop(1,"transparent");
+    let grd3 = ctx.createRadialGradient(centerX,centerY,shortervar*sizechangeS/feather,centerX,centerY,shortervar*sizechangeS);
+    grd3.addColorStop(0,c3);
+    grd3.addColorStop(1,"transparent");
+
+
+    //ctx.fillStyle = c1;
+    ctx.fillStyle = grd;
     ctx.beginPath();
     ctx.arc(centerX, centerY, shortervar*sizechangeI, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.stroke();
+    //ctx.stroke();
 
     if(R>I){
-        ctx.globalAlpha = 0.5;
+        ctx.globalAlpha = 0.4;
     }
-    ctx.fillStyle = c2;
+    ctx.fillStyle = grd2;
     ctx.beginPath();
     ctx.arc(centerX, centerY, shortervar*sizechangeR, 0, 2 * Math.PI);
-    ctx.stroke();
+    //ctx.stroke();
     ctx.fill();
     if(S>I || S>R){
-        ctx.globalAlpha = 0.5;
+        ctx.globalAlpha = 0.4;
     }
     else{
         ctx.globalAlpha = 0.95;
     }
-    ctx.fillStyle = c3;
+    ctx.fillStyle = grd3;
     ctx.beginPath();
     ctx.arc(centerX, centerY, shortervar*sizechangeS, 0, 2 * Math.PI);
-    ctx.stroke();
+    //ctx.stroke();
     ctx.fill();
 
     ctx.globalAlpha = 0.95;
+    
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, c.height-200, 260, 160);
+
     ctx.fillStyle = "black";
     ctx.font = "30px Arial";
     let fillstring = "Day:"+Math.round(t*7);
-    ctx.fillText(fillstring, centerX, c.height-50);
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, c.height-200, 260, 160);
+    ctx.fillText(fillstring,130, c.height-150);
+
     ctx.fillStyle = c3;
     fillstring = "[Susceptible]";
     ctx.fillText(fillstring, 0, c.height-50);

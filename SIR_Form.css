@@ -5,60 +5,88 @@
 // CovidTracking.com,
 // " Epidemiological parameter review and comparative dynamics of influenza, respiratory syncytial virus, rhinovirus, human coronavirus, and adenovirus"
 // it is currently hosted on https://pandemicsimulator.neocities.org/.*/
+body {
+    background-color: azure;
+    width: 100%; 
+    height: 700px;
+}
+    .form-container {
+        border: cornflowerblue;
+        background-color: antiquewhite;
+        width: 30%;
+        float: right;
+        margin-right: 5%;
+        padding: 2%;
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 70%;
+    }
+        .SIR_values {
+            float: left;
+            width: 50%; 
+            height: 10%;
+        }
 
-.form-container {
-    border: cornflowerblue;
-    background-color: antiquewhite;
-    width: 500px;
-    float: right;
-    margin-right: 80px;
-    padding: 10px;
-    height: 880px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+        .API_values {
+            float: left;;
+            width: 50%; 
+            height: 10%;
+        }
 
-.map {
-    float: left;
-    position: absolute;
-}
+        .title {
+            font-size: 200%;
+            font-weight: bold;
+        }
 
-.SIR_values {
-    float: left;
-}
+        .dropdowns{
+            width: 30%; 
+            height: 4%;
+            font-size: 80%;
+        }
+        .typeIns{
+            width: 30%; 
+            height: 2%;
+            font-size: 80%;
+        }
 
-.API_values {
-    float: right;
-}
+        .signature {
+            bottom: 20%;
+            right: 0%;
 
-.title {
-    font-size: 30px;
-    font-weight: bold;
-}
+        }
 
-#container {
-    position: relative;
-    float: left;
-}
-#container canvas, #map {
-    position: absolute;
-}
-canvas {
-    border: 1px solid black;
-}
+        .small_header {
+            font-weight: bold;
+        }
 
-.signature {
-    bottom: 20px;
-    right: 0px;
+        .retrieve {
+            float: left;
+            width: 30%; 
+            font-size: 80%;
+            
+        }
 
-}
-
-.small_header {
-    font-weight: bold;
-}
-
-.retrieve {
-    float: right;
-    margin-right: 140px;
-}
+    #container{
+        position: relative;
+        float: left;
+        width: 60%; 
+        height: 100%;
+    }
+    #container canvas, #map{
+        position: absolute;
+        width: 60%; 
+        height: 100%;
+    }
+    canvas{
+        border: 2px solid black;
+        width: 100%; 
+        height: 100%;
+    }
+        .maps{
+        }
+        .canvas{
+            width: 100%; 
+            height: 100%;
+        }
