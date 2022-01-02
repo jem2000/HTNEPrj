@@ -29,6 +29,7 @@ let apiRetived = false;
 let show1 = true;
 let show2 = false;
 let sleepdelay = 80;
+// sets defaults
 function setCityData(city) {
     if (city === "sf") {
         pop = 874961.0
@@ -81,6 +82,7 @@ function dI(a,b,S,I){
 function dR(b,I){
     return b*I
 }
+// a way of implementing a SIR model that is solved with EULERS method for aproximating Derivitives.
 function SIREulers(){
     let S = s0
     let I = i0
@@ -106,7 +108,7 @@ function SIREulers(){
 
     return [SS, CI, TI, Rec, D]
 }
-
+// main code for drawing map with graphics
 // Initialize and add the map
 function DrawCircles(S,I,R){
     let c = document.getElementById("myCanvas");
@@ -117,7 +119,7 @@ function DrawCircles(S,I,R){
     let ctx = c.getContext("2d");
     let c1 = "red";
     let c2 = "black";
-    let c3 = "green"; 
+    let c3 = "green";
     ctx.clearRect(0, 0, c.width, c.height);
     let shortervar = (c.width<c.height)? c.width:c.height;
     shortervar = shortervar/2;
@@ -169,7 +171,7 @@ function DrawCircles(S,I,R){
     ctx.fill();
 
     ctx.globalAlpha = 0.95;
-    
+
     ctx.fillStyle = "white";
     ctx.fillRect(0, c.height-200, 260, 160);
 
@@ -189,7 +191,7 @@ function DrawCircles(S,I,R){
     ctx.fillText(fillstring, 0, c.height-150);
 
 }
-
+// done to get api call
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
@@ -211,7 +213,7 @@ const AnimateToTime = async () => {
         boolAnimating = false;
     }
 }
-
+//setter for global values
 function setValues() {
     let SS = document.getElementById('SS')
     let CI = document.getElementById('CI')
@@ -276,7 +278,7 @@ animatebtn.addEventListener('click', async () => {
 const asyncButton = document.getElementById('button');
 
 
-
+// listener on form submission 
 asyncButton.addEventListener('click', async () => {
     console.log('clicked')
     let API_SS = document.getElementById('API_SS')
@@ -318,7 +320,7 @@ function hide() {
         let checkbox1 = document.getElementById('show1')
         let checkbox2 = document.getElementById('show2')
     if(!boolAnimating){
-        
+
         let ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (checkbox1.checked || checkbox2.checked) {
@@ -367,7 +369,7 @@ function drawModelData(){
     let D = document.getElementById('D')
     if(show1){
          DrawCircles(parseInt(SS.value), parseInt(CI.value), parseInt(R.value));
-    } 
+    }
 }
 function clear(){
     let canvas = document.getElementById('myCanvas')
